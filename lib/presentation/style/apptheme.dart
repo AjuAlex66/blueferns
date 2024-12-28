@@ -8,7 +8,26 @@ class AppTheme {
         useMaterial3: false,
         primaryColor: primaryColor,
         scaffoldBackgroundColor: Colors.white,
-
+        radioTheme: RadioThemeData(
+          fillColor: WidgetStateProperty.resolveWith<Color?>(
+            (Set<WidgetState> states) {
+              if (states.contains(WidgetState.selected)) {
+                return primaryColor;
+              }
+              return Colors.grey[200];
+            },
+          ),
+          overlayColor: WidgetStateProperty.resolveWith<Color?>(
+            (Set<WidgetState> states) {
+              if (states.contains(WidgetState.hovered)) {
+                return primaryColor.withOpacity(0.1);
+              }
+              return Colors.grey[200];
+            },
+          ),
+          visualDensity: VisualDensity.adaptivePlatformDensity,
+          splashRadius: 20.0,
+        ),
         checkboxTheme: CheckboxThemeData(
           fillColor: WidgetStateProperty.resolveWith<Color?>(
             (Set<WidgetState> states) {
@@ -19,9 +38,8 @@ class AppTheme {
             },
           ),
           checkColor: WidgetStateProperty.all(Colors.white),
-          side: const BorderSide(color: Color(0xFF7B1F44)),
+          side: BorderSide(color: Colors.grey[200]!),
         ),
-
         appBarTheme: const AppBarTheme(
           color: Colors.white,
           elevation: 0,

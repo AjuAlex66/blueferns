@@ -2,11 +2,11 @@ import 'package:blueferns_taskaju/domain/initializer.dart';
 import 'package:blueferns_taskaju/models/filterdatamodel.dart';
 import 'package:blueferns_taskaju/presentation/blocs/filterbloc.dart';
 import 'package:blueferns_taskaju/presentation/providers/changerprovider.dart';
-import 'package:blueferns_taskaju/presentation/style/styles.dart';
 import 'package:blueferns_taskaju/presentation/widgets/centerloading.dart';
 import 'package:blueferns_taskaju/presentation/widgets/customchip.dart';
 import 'package:blueferns_taskaju/presentation/widgets/errorview.dart';
 import 'package:blueferns_taskaju/presentation/widgets/expansioncontainer.dart';
+import 'package:blueferns_taskaju/presentation/widgets/noexpansioncontainer.dart';
 import 'package:blueferns_taskaju/utils/helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -75,7 +75,10 @@ class _FilterPageState extends State<FilterPage> {
           sortDataModel.data!.length,
           (index) => Column(
             children: [
-              ExpansionContainer(filterData: sortDataModel.data![index]),
+              sortDataModel.data![index].isExpansionRequired!
+                  ? ExpansionContainer(filterData: sortDataModel.data![index])
+                  : NoExpansionConstainer(
+                      filterData: sortDataModel.data![index]),
               if (index != sortDataModel.data!.length - 1)
                 Helper.allowHeight(15)
             ],

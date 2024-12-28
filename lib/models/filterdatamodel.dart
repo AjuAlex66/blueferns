@@ -24,13 +24,14 @@ class SortDataModel {
 class FilterData {
   String? name;
   String? slug;
-  bool? isExpanded;
+  bool? isExpanded, isExpansionRequired;
   List<Taxonomies>? taxonomies;
 
   FilterData({this.name, this.slug, this.taxonomies});
 
   FilterData.fromJson(Map<String, dynamic> json) {
     isExpanded = false;
+    isExpansionRequired = true;
     name = json['name'];
     slug = json['slug'];
     taxonomies = <Taxonomies>[];

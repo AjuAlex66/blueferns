@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:blueferns_taskaju/main.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:haptic_feedback/haptic_feedback.dart';
 import 'package:page_transition/page_transition.dart';
 
@@ -17,6 +18,10 @@ class Helper {
 
   static void showException({required String scope, required String message}) =>
       showLog("Exception occured at $scope --> $message");
+  static showToast({required msg}) {
+    Fluttertoast.cancel(); // for immediate stopping
+    return Fluttertoast.showToast(msg: msg);
+  }
   //LOG <---
 
   //SIZE && SPACING --->

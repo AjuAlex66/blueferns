@@ -93,13 +93,20 @@ class ExpansionContainer extends StatelessWidget {
                                   width: 30,
                                   height: 30,
                                   child: Checkbox(
-                                    value: filterData!
-                                        .taxonomies![index].isSelected,
-                                    onChanged: (value) => onChanged(
-                                      value,
-                                      index,
-                                    ),
-                                  )),
+                                      value: filterData!
+                                          .taxonomies![index].isSelected,
+                                      onChanged: (value) {
+                                        if (filterData!.taxonomies![index].id !=
+                                            null) {
+                                          onChanged(
+                                            value,
+                                            index,
+                                          );
+                                        } else {
+                                          Helper.showToast(
+                                              msg: "Unable to select item");
+                                        }
+                                      })),
                               Helper.allowWidth(15),
                               Text(
                                 filterData!.taxonomies![index].name ?? "N/A",
@@ -128,11 +135,13 @@ class ExpansionContainer extends StatelessWidget {
 
   void onChanged(bool? checkValue, int index) {
     filterData!.taxonomies![index].isSelected = checkValue;
+
     if (checkValue!) {
       Initializer.selectedFilterData!.add(filterData!.taxonomies![index]);
     } else {
       Initializer.selectedFilterData!.remove(filterData!.taxonomies![index]);
     }
+
     Initializer.changerProvider.justChange();
   }
 }

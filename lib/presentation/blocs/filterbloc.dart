@@ -22,6 +22,26 @@ class FilterBloc extends Bloc<FilterEvents, FilterStates> {
       if (response.statusCode == 200) {
         Initializer.sortDataModel = SortDataModel.fromJson(data);
         if (Initializer.sortDataModel.data!.isNotEmpty) {
+          bool? identified = false;
+          FilterData? item;
+          for (var e in Initializer.sortDataModel.data!) {
+            if (e.slug!.toLowerCase() == "sort") {
+              identified = true;
+              item = e;
+              item.isExpansionRequired = false;
+              if (item.taxonomies!.isNotEmpty) {
+                item.taxonomies!.first.isSelected = true;
+                Initializer.changerProvider
+                    .setSortValue(item.taxonomies!.first.slug!);
+              }
+              break;
+            }
+          }
+
+          if (identified!) {
+            Initializer.sortDataModel.data!.remove(item);
+            Initializer.sortDataModel.data!.insert(0, item!);
+          }
           emit(FilterDataFetched());
         } else {
           emit(FilterDataNotFound());
